@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    // Target the latest ECMAScript features for modern JavaScript support
+    "target": "ES2021",
+    // Use CommonJS modules for Node.js compatibility
+    "module": "commonjs",
+    // Specify output directory for compiled files
+    "outDir": "./dist",
+    // Specify the root directory of input files
+    "rootDir": "./src",
+    // Enable strict type checking for enhanced code reliability
+    "strict": true,
+    // Allow default imports from modules with no default export
+    "esModuleInterop": true,
+    // Skip type checking of declaration files for faster compilation
+    "skipLibCheck": true,
+    // Ensure consistent casing in file names across different operating systems
+    "forceConsistentCasingInFileNames": true,
+    // Configure path aliases for improved import readability and maintainability
+    "paths": {
+      "@shared/*": ["../shared/*"],
+      "@/*": ["./src/*"]
+    },
+    // Include type definitions for Node.js, Express, and Jest
+    "types": ["node", "express", "jest"],
+    // Generate source maps for debugging
+    "sourceMap": true,
+    // Enable experimental decorators for potential future use
+    "experimentalDecorators": true,
+    // Preserve const enums for better performance
+    "preserveConstEnums": true,
+    // Enable incremental compilation for faster subsequent builds
+    "incremental": true
+  },
+  // Specify files to include in compilation
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts"
+  ],
+  // Specify files to exclude from compilation
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
