@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./src/frontend
+    container_name: pollen8-frontend
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_URL=http://api:3000
+      - VITE_SOCKET_URL=ws://socket:3001
+    networks:
+      - pollen8-network
+    depends_on:
+      - api
+      - socket
+
+  api:
+    build:
+      context: ./src/api
+    container_name: pollen8-api
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/pollen8
+      - REDIS_URL=redis://redis:6379
+    networks:
+      - pollen8-network
+    depends_on:
+      - mongodb
+      - redis
+
+  socket:
+    build:
+      context: ./src/socket
+    container_name: pollen8-socket
+    ports:
+      - "3001:3001"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    networks:
+      - pollen8-network
+    depends_on:
+      - redis
+
+  backend:
+    build:
+      context: ./src/backend
+    container_name: pollen8-backend
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/pollen8
+      - REDIS_URL=redis://redis:6379
+    networks:
+      - pollen8-network
+    depends_on:
+      - mongodb
+      - redis
+
+  mongodb:
+    image: mongo
+    container_name: pollen8-mongodb
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - pollen8-network
+
+  redis:
+    image: redis:alpine
+    container_name: pollen8-redis
+    volumes:
+      - redis_data:/data
+    networks:
+      - pollen8-network
+
+networks:
+  pollen8-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+  redis_data:
