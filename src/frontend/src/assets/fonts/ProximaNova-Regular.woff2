@@ -1,0 +1,35 @@
+File characteristics:
+- Format: WOFF2 (Web Open Font Format 2.0)
+- Weight: Regular
+- Usage: Primary body text in the Pollen8 platform
+
+This file is part of the font family used in the black and white minimalist interface design of the Pollen8 platform. It is typically loaded via a CSS @font-face declaration for optimized web font loading.
+
+To use this font in the project:
+
+1. Ensure this file is placed in the correct directory: src/frontend/src/assets/fonts/
+2. Reference it in your CSS, typically in src/frontend/src/styles/index.css, using an @font-face declaration:
+
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('../assets/fonts/ProximaNova-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+3. Use it in your Tailwind CSS configuration or directly in your styles:
+
+font-family: 'Proxima Nova', sans-serif;
+
+Performance considerations:
+- WOFF2 format provides optimal compression for fast loading
+- Consider preloading this font file for critical UI rendering
+- Implement font subsetting if not all characters are needed to reduce file size
+
+Accessibility impact:
+- Chosen for excellent readability across different screen sizes
+- Regular weight provides good contrast and legibility
+- Part of the overall user-centric design approach
+
+Remember to include appropriate licensing information for the Proxima Nova font in your project documentation.
