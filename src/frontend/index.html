@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Connect with verified professionals across industries with Pollen8's minimalist, data-driven networking platform.">
+    <meta name="theme-color" content="#000000">
+    <title>Pollen8 - Professional Networking Redefined</title>
+    <link rel="icon" type="image/svg+xml" href="/src/assets/images/logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Proxima Nova font preload -->
+    <link rel="preload" href="/src/assets/fonts/ProximaNova-Light.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/src/assets/fonts/ProximaNova-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/src/assets/fonts/ProximaNova-Semibold.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Critical CSS inline for performance -->
+    <style>
+        @font-face {
+            font-family: 'Proxima Nova';
+            src: url('/src/assets/fonts/ProximaNova-Light.woff2') format('woff2');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Proxima Nova';
+            src: url('/src/assets/fonts/ProximaNova-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Proxima Nova';
+            src: url('/src/assets/fonts/ProximaNova-Semibold.woff2') format('woff2');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+        body {
+            font-family: 'Proxima Nova', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #FFFFFF;
+        }
+        #root {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+    <!-- Preload critical JavaScript -->
+    <link rel="modulepreload" href="/src/index.tsx">
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+    <!-- Inline script for immediate execution -->
+    <script>
+        // Check for service worker support and register if available
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js').then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
