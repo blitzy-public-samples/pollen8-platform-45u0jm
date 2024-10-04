@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+    "paths": {
+      "@shared/*": ["../shared/*"],
+      "@models/*": ["./src/models/*"],
+      "@services/*": ["./src/services/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@config/*": ["./src/config/*"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "types": [
+    "node",
+    "jest",
+    "mongodb",
+    "redis"
+  ],
+  "notes": [
+    "This configuration aligns with the API and Socket service configurations for consistency",
+    "The setup supports the black and white minimalist design approach by ensuring clean, maintainable backend code",
+    "Path aliases are structured to support the modular architecture defined in the technical specification"
+  ]
+}
