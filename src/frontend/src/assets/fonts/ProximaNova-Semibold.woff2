@@ -1,0 +1,42 @@
+The file cannot be displayed as text in this format.
+
+File details:
+- Name: ProximaNova-Semibold.woff2
+- Type: Web Font (WOFF2)
+- Font Family: Proxima Nova
+- Weight: Semibold
+- Usage: Headers (H1, H2) and button text in the Pollen8 platform
+
+This font file is used in the Pollen8 platform's minimalist user interface to provide a modern, professional typography for specific elements. It addresses the following requirements:
+
+1. User-Centric Design:
+   - Provides a modern, professional font for the minimalist black and white interface
+   - Location in documentation: Technical Specification/1.1 System Objectives/User-Centric Design
+
+2. Typography Standards:
+   - Implements the semibold weight specified for headers and button text
+   - Location in documentation: Technical Specification/3.5.2 Typography
+
+Usage in the application:
+- Headers:
+  - H1: 30px
+  - H2: 25px
+- Button Text: 16px
+
+The font is optimized for web use with:
+- Smaller file size
+- Faster loading
+- Web optimization
+
+It is part of a set including Light and Regular weights, used in conjunction with Tailwind CSS for consistent typography throughout the application.
+
+This font file contributes to the minimalist black and white design aesthetic of the Pollen8 platform and is loaded asynchronously for optimized page load performance.
+
+To use this font in the application, it should be referenced in the CSS using the @font-face rule, typically defined in src/frontend/src/styles/index.css.
+
+Performance considerations:
+- The file is optimally compressed for faster loading
+- It should be cached by browsers for improved performance
+- Consider preloading for critical rendering paths
+
+Browser support: All modern browsers support the WOFF2 format.
