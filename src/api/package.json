@@ -1,0 +1,47 @@
+{
+  "name": "pollen8-api",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Pollen8 Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git repository URL"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts"
+  },
+  "dependencies": {
+    "express": "^4.x.x",
+    "shared": "../shared"
+  },
+  "devDependencies": {
+    "typescript": "^4.x.x",
+    "@types/node": "^16.x.x",
+    "jest": "^27.x.x",
+    "ts-jest": "^27.x.x",
+    "eslint": "^8.x.x",
+    "prettier": "^2.x.x",
+    "nodemon": "^2.x.x"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
+  "eslintConfig": {
+    "extends": "./eslintrc.js"
+  },
+  "nodemonConfig": {
+    "watch": ["src"],
+    "ext": "ts"
+  }
+}
