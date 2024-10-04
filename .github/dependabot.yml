@@ -1,0 +1,65 @@
+# Dependabot configuration file for automated dependency updates
+# This file configures Dependabot for automated dependency updates across multiple package ecosystems in the Pollen8 platform.
+
+version: 2
+updates:
+  # Frontend dependencies (npm)
+  - package-ecosystem: "npm"
+    directory: "/src/frontend"
+    schedule:
+      interval: "weekly"
+    target-branch: "develop"
+    labels:
+      - "dependencies"
+      - "frontend"
+
+  # API dependencies (npm)
+  - package-ecosystem: "npm"
+    directory: "/src/api"
+    schedule:
+      interval: "weekly"
+    target-branch: "develop"
+    labels:
+      - "dependencies"
+      - "api"
+
+  # Socket service dependencies (npm)
+  - package-ecosystem: "npm"
+    directory: "/src/socket"
+    schedule:
+      interval: "weekly"
+    target-branch: "develop"
+    labels:
+      - "dependencies"
+      - "socket"
+
+  # Docker base images
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "docker"
+
+  # GitHub Actions workflows
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "ci"
+
+# Security Considerations:
+# - Regular updates help prevent known vulnerabilities
+# - Separate PRs for different ecosystems enable focused review
+# - Weekly schedule balances security with stability
+# - Integration with CI ensures updates don't break builds
+
+# Additional Notes:
+# - Configures updates for npm, Docker, and GitHub Actions
+# - Uses consistent weekly schedule across all ecosystems
+# - Targets develop branch to avoid direct main updates
+# - Implements clear labeling for easy PR categorization
+# - Aligns with the project's security and CI/CD requirements
