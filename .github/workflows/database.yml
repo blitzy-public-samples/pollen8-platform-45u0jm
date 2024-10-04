@@ -1,0 +1,124 @@
+name: Database CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  BACKUP_BUCKET: ${{ secrets.BACKUP_BUCKET }}
+
+jobs:
+  validate-migrations:
+    name: Validate Database Migrations
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: |
+          cd src/database
+          npm ci
+
+      - name: Validate migration syntax
+        run: |
+          cd src/database
+          npm run lint:migrations
+
+      - name: Run migration tests
+        run: |
+          cd src/database
+          npm run test:migrations
+
+  dry-run-migrations:
+    name: Dry Run Migrations
+    needs: validate-migrations
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: |
+          cd src/database
+          npm ci
+
+      - name: Setup test database
+        run: |
+          cd src/database
+          npm run setup:test-db
+
+      - name: Run migrations (dry-run)
+        run: |
+          cd src/database
+          npm run migrate:dry-run
+
+      - name: Verify schema changes
+        run: |
+          cd src/database
+          npm run verify:schema
+
+      - name: Test rollback capability
+        run: |
+          cd src/database
+          npm run migrate:rollback:test
+
+  deploy-migrations:
+    name: Deploy Database Migrations
+    needs: [validate-migrations, dry-run-migrations]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: |
+          cd src/database
+          npm ci
+
+      - name: Connect to database
+        run: |
+          cd src/database
+          npm run db:connect
+
+      - name: Backup database
+        run: |
+          cd src/database
+          npm run db:backup
+
+      - name: Execute migrations
+        run: |
+          cd src/database
+          npm run migrate:up
+
+      - name: Verify deployment
+        run: |
+          cd src/database
+          npm run verify:deployment
