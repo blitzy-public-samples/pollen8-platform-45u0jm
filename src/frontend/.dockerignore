@@ -1,0 +1,38 @@
+.git
+.gitignore
+.env
+.env.*
+README.md
+CHANGELOG.md
+
+# Dependencies and build artifacts
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.npm
+*.log
+
+# Test and documentation files
+tests
+__tests__
+coverage
+jest.config.js
+
+# Development tools and IDE files
+.vscode
+.idea
+*.swp
+*.swx
+.DS_Store
+
+# TypeScript and configuration files
+tsconfig.json
+.eslintrc.js
+postcss.config.js
+tailwind.config.js
+vite.config.ts
+
+# Source files
+src
+!src/assets
