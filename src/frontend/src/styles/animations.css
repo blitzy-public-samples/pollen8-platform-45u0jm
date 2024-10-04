@@ -1,0 +1,203 @@
+/* 
+This file contains the CSS animations and transitions used throughout the Pollen8 platform,
+implementing the minimalist black and white design aesthetic while providing smooth,
+professional animations for various UI elements.
+
+Requirements addressed:
+1. User-Centric Design: Implements smooth animations for enhanced user experience
+   Location: Technical Specification/1.1 System Objectives/User-Centric Design
+2. Minimalist Interface: Ensures animations adhere to black and white design aesthetic
+   Location: Technical Specification/1.1 System Objectives/User-Centric Design
+3. Network Visualization: Provides animations for network graph interactions
+   Location: Technical Specification/1.2 Scope/Core Functionalities
+*/
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Spin Animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Slide In Animation */
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Fade In Animation Class */
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Pulse Animation Class */
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Spin Animation Class */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Slide In Animation Class */
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Transition Classes */
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.transition-transform {
+  transition: transform 0.3s ease;
+}
+
+/* Welcome Text Animation */
+.welcome-text-enter {
+  animation: fadeIn 3s ease-in-out;
+}
+
+.welcome-text-exit {
+  animation: fadeIn 1s ease-in-out reverse;
+}
+
+/* Verify Button Animation */
+.verify-button {
+  animation: pulse 4s ease-in-out infinite;
+}
+
+/* Network Graph Transitions */
+.network-graph-transition {
+  transition: all 1s ease-in;
+}
+
+/* Profile Banner Star Constellation Effect */
+@keyframes starConstellation {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.profile-banner-star {
+  animation: starConstellation 3s linear infinite;
+}
+
+/* Loading Spinner Animation */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Accessibility: Respect user preferences for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hover and Focus Transitions */
+.interactive-element {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.interactive-element:hover,
+.interactive-element:focus {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Network Value Animation */
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.network-value-update {
+  animation: countUp 0.5s ease-out;
+}
+
+/* Invite Link Copy Animation */
+@keyframes copyFeedback {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.copy-feedback {
+  animation: copyFeedback 0.3s ease-in-out;
+}
+
+/* Error Shake Animation */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+.error-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Ensure animations support the black and white color scheme */
+/* All animations use transform and opacity for performance */
+/* Consistent timing functions are used across similar animations */
+/* Animations are subtle and professional, adhering to minimalist design */
