@@ -1,0 +1,42 @@
+# ensuring appropriate review and maintainability of different components.
+
+# Default owners for everything in the repo (unless a later match takes precedence)
+* @pollen8/core-team
+
+# Frontend code ownership
+/src/frontend/* @pollen8/frontend-team
+
+# Backend code ownership
+/src/backend/* @pollen8/backend-team
+
+# WebSocket service ownership
+/src/socket/* @pollen8/backend-team
+
+# Database code ownership
+/src/database/* @pollen8/database-team
+
+# Shared utilities ownership
+/src/shared/* @pollen8/core-team
+
+# Infrastructure code ownership
+/infrastructure/* @pollen8/devops-team
+
+# CI/CD workflow ownership
+/.github/workflows/* @pollen8/devops-team
+
+# Authentication code review
+**/auth/** @pollen8/security-team @pollen8/backend-team
+
+# Encryption utilities review
+**/encryption.ts @pollen8/security-team
+
+# Configuration file review
+**/config/*.ts @pollen8/security-team @pollen8/devops-team
+
+# This CODEOWNERS file uses a pattern-matching syntax to assign ownership.
+# Multiple teams can be assigned as owners for the same pattern.
+# More specific patterns take precedence over less specific ones.
+# The file ensures that appropriate experts review changes to their domains.
+# Security-critical components require review from the security team.
+# The core team serves as a fallback for files not matching specific patterns.
+# This setup aligns with the microservices architecture defined in the technical specification.
