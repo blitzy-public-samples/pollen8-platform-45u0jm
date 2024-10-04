@@ -55,7 +55,7 @@ jobs:
         npm install
         npm audit --production --audit-level=moderate
     - name: Upload security scan results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: npm-audit-report
         path: src/socket/npm-audit.json
