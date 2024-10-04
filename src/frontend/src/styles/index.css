@@ -1,0 +1,260 @@
+/* 
+Main stylesheet for the Pollen8 platform
+Implements the minimalist black and white design system while providing core styling and Tailwind CSS configuration imports.
+
+Requirements addressed:
+1. User-Centric Design: Implements black and white minimalist interface
+   Location: Technical Specification/1.1 System Objectives/User-Centric Design
+2. Responsive Design: Ensures consistent styling across devices
+   Location: Technical Specification/1.1 System Objectives/User-Centric Design
+3. Modern UI: Establishes the foundation for an intuitive, modern interface
+   Location: Technical Specification/1.2 Scope/Benefits
+*/
+
+/* Tailwind CSS imports */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom font import */
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('../assets/fonts/ProximaNova-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('../assets/fonts/ProximaNova-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('../assets/fonts/ProximaNova-Semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Import animations */
+@import './animations.css';
+
+/* Root variables */
+:root {
+  --primary-bg: #000000;
+  --primary-text: #FFFFFF;
+  --accent: #EFEFEF;
+}
+
+/* Base styles */
+body {
+  font-family: 'Proxima Nova', sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Typography */
+h1 {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 25px;
+  font-weight: 400;
+}
+
+button {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+input {
+  font-size: 18px;
+}
+
+/* Custom utility classes */
+.font-proxima {
+  font-family: 'Proxima Nova', sans-serif;
+}
+
+.bg-primary {
+  background-color: var(--primary-bg);
+}
+
+.text-primary {
+  color: var(--primary-text);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.transition-default {
+  transition: all 0.3s ease;
+}
+
+/* Component styles */
+.btn {
+  @apply font-proxima font-semibold py-2 px-4 rounded transition-default;
+}
+
+.btn-primary {
+  @apply bg-white text-black hover:bg-accent hover:text-black;
+}
+
+.btn-secondary {
+  @apply bg-black text-white border border-white hover:bg-accent hover:text-black;
+}
+
+.input-field {
+  @apply font-proxima bg-black text-white border border-white rounded py-2 px-3 w-full focus:outline-none focus:border-accent;
+}
+
+.card {
+  @apply bg-black border border-white rounded-lg p-4 shadow-lg;
+}
+
+/* Network visualization elements */
+.network-node {
+  @apply fill-white stroke-black stroke-2;
+}
+
+.network-link {
+  @apply stroke-white stroke-opacity-50;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  body {
+    font-size: 12px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  :root {
+    --primary-bg: #000000;
+    --primary-text: #FFFFFF;
+    --accent: #FFFFFF;
+  }
+}
+
+/* Dark mode (default is already dark, this ensures consistency) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-bg: #000000;
+    --primary-text: #FFFFFF;
+    --accent: #EFEFEF;
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    background-color: white;
+    color: black;
+  }
+
+  .no-print {
+    display: none;
+  }
+}
+
+/* Ensure content is visible when JavaScript is disabled */
+.no-js .js-required {
+  display: none;
+}
+
+/* Optimizations for performance */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Implement BEM naming convention for custom classes */
+.profile-banner__name {
+  @apply text-2xl font-semibold mb-2;
+}
+
+.profile-banner__network-value {
+  @apply text-xl font-light;
+}
+
+.invite-card__title {
+  @apply text-lg font-semibold mb-1;
+}
+
+.invite-card__stats {
+  @apply text-sm text-accent;
+}
+
+/* Ensure accessibility compliance */
+.visually-hidden {
+  @apply sr-only;
+}
+
+.focus-visible:focus {
+  @apply outline-none ring-2 ring-accent ring-opacity-50;
+}
+
+/* Critical CSS patterns */
+.above-the-fold {
+  @apply font-proxima text-white bg-black min-h-screen flex flex-col justify-center items-center;
+}
+
+/* Implement responsive design patterns */
+.responsive-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
+}
+
+/* Optimize font loading */
+.font-loaded {
+  @apply font-proxima;
+}
+
+/* Ensure efficient selector specificity */
+.btn.btn-primary {
+  @apply bg-white text-black;
+}
+
+/* Use CSS variables for theme values */
+.theme-aware-component {
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  border-color: var(--accent);
+}
+
+/* Tailwind's purge option will minimize CSS bundle size */
+/* This comment ensures that Tailwind doesn't purge these classes */
+/* 
+  .sm:grid-cols-2
+  .md:grid-cols-3
+  .lg:grid-cols-4
+  .xl:text-lg
+*/
