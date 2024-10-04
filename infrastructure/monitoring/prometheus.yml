@@ -1,0 +1,71 @@
+# Prometheus configuration file for Pollen8 platform
+# This file defines scraping targets, intervals, and alerting rules
+
+# Global configurations
+global:
+  scrape_interval: 15s     # Set the scrape interval to every 15 seconds
+  evaluation_interval: 15s # Evaluate rules every 15 seconds
+  scrape_timeout: 10s      # Timeout for scrape requests
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+# Load rules once and periodically evaluate them
+rule_files:
+  - "alert.rules"
+
+# Scrape configurations
+scrape_configs:
+  # API service scrape config
+  - job_name: 'api'
+    static_configs:
+      - targets: ['api:3000']
+
+  # Frontend service scrape config
+  - job_name: 'frontend'
+    static_configs:
+      - targets: ['frontend:80']
+
+  # Socket service scrape config
+  - job_name: 'socket'
+    static_configs:
+      - targets: ['socket:3001']
+
+  # MongoDB exporter scrape config
+  - job_name: 'mongodb'
+    static_configs:
+      - targets: ['mongodb-exporter:9216']
+
+  # Redis exporter scrape config
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-exporter:9121']
+
+  # ECS service discovery for dynamic targets
+  - job_name: 'ecs-service-discovery'
+    ec2_sd_configs:
+      - region: us-east-1
+        port: 9100
+    relabel_configs:
+      - source_labels: [__meta_ecs_container_name]
+        target_label: container_name
+
+# Storage configuration
+storage:
+  tsdb:
+    retention.time: 15d
+    retention.size: 50GB
+
+# Remote write configuration for long-term storage
+remote_write:
+  - url: "http://remote-storage:9201/write"
+
+# Security considerations
+# Note: Actual implementation of these features requires additional configuration
+# - Uses HTTPS for secure metric collection
+# - Basic auth configured for scraping endpoints
+# - TLS certificates specified for secure communications
