@@ -1,0 +1,113 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+  ECS_SERVICE: ${{ secrets.ECS_SERVICE }}
+  ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}
+  VITE_API_URL: ${{ secrets.VITE_API_URL }}
+  VITE_SOCKET_URL: ${{ secrets.VITE_SOCKET_URL }}
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: src/frontend/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd src/frontend
+          npm ci
+
+      - name: Run linting
+        run: |
+          cd src/frontend
+          npm run lint
+
+      - name: Run tests
+        run: |
+          cd src/frontend
+          npm test
+
+      - name: Build application
+        run: |
+          cd src/frontend
+          npm run build
+        env:
+          VITE_API_URL: ${{ env.VITE_API_URL }}
+          VITE_SOCKET_URL: ${{ env.VITE_SOCKET_URL }}
+
+  build-and-push-image:
+    name: Build and Push Docker Image
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./src/frontend
+          file: ./src/frontend/Dockerfile
+          push: true
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+        env:
+          VITE_API_URL: ${{ env.VITE_API_URL }}
+          VITE_SOCKET_URL: ${{ env.VITE_SOCKET_URL }}
+
+  deploy:
+    name: Deploy to ECS
+    needs: build-and-push-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Update ECS service
+        run: |
+          aws ecs update-service --cluster ${{ env.ECS_CLUSTER }} \
+                                 --service ${{ env.ECS_SERVICE }} \
+                                 --force-new-deployment
+
+      - name: Wait for deployment
+        run: |
+          aws ecs wait services-stable --cluster ${{ env.ECS_CLUSTER }} \
+                                       --services ${{ env.ECS_SERVICE }}
+
+      - name: Health check
+        run: |
+          # Add health check logic here
+          # For example, curl the frontend URL and check for a 200 status code
+          # curl -sSf $FRONTEND_URL || exit 1
