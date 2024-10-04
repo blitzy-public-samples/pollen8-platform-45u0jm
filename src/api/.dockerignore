@@ -1,0 +1,41 @@
+.git
+.gitignore
+.env
+.env.*
+README.md
+CHANGELOG.md
+docker-compose.yml
+docker-compose.*.yml
+
+# Dependencies and build artifacts
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.npm
+*.log
+
+# Test and documentation
+tests
+__tests__
+test
+docs
+coverage
+
+# Development tools and IDE
+.vscode
+.idea
+*.swp
+*.swx
+.DS_Store
+
+# TypeScript files
+src/*.ts
+!src/*.d.ts
+tsconfig.json
+tslint.json
+
+# Build output
+dist
+build
+*.js.map
